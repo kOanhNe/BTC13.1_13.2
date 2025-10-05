@@ -78,18 +78,16 @@ public class UserDB {
     }
 
     public static List<User> selectUsers() {
-        EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        String qString = "SELECT u from User u";
-        TypedQuery<User> q = em.createQuery(qString, User.class);
+    EntityManager em = DBUtil.getEmFactory().createEntityManager();
+    String qString = "SELECT u from User u";
+    TypedQuery<User> q = em.createQuery(qString, User.class);
 
-        List<User> users;
-        try {
-            users = q.getResultList();
-            if (users == null || users.isEmpty())
-                users = null;
-        } finally {
-            em.close();
-        }
-        return users;
+    try {
+        // Luôn trả về danh sách, dù nó có rỗng hay không.
+        return q.getResultList(); 
+    } finally {
+        em.close();
+    }
+
     }
 }
