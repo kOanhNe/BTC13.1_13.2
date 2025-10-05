@@ -5,7 +5,7 @@
     <artifactId>BaiTap13</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>BaiTap13-2 Maven Webapp</name>
+    <name>BaiTap13 Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -60,7 +60,7 @@
     </dependencies>
 
     <build>
-        <finalName>BaiTap13-2</finalName>
+        <finalName>BaiTap13</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
