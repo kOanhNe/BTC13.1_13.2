@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 
 import model.User;
 
-
 public class UserDB {
 
     public static void insert(User user) {
@@ -19,7 +18,7 @@ public class UserDB {
             em.persist(user);
             trans.commit();
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e); // Dùng System.err để in lỗi
             trans.rollback();
         } finally {
             em.close();
@@ -34,7 +33,7 @@ public class UserDB {
             em.merge(user);
             trans.commit();
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
             trans.rollback();
         } finally {
             em.close();
@@ -49,7 +48,7 @@ public class UserDB {
             em.remove(em.merge(user));
             trans.commit();
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
             trans.rollback();
         } finally {
             em.close();
@@ -59,12 +58,11 @@ public class UserDB {
     public static User selectUser(String email) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         String qString = "SELECT u FROM User u " +
-                "WHERE u.email = :email";
+                         "WHERE u.email = :email";
         TypedQuery<User> q = em.createQuery(qString, User.class);
         q.setParameter("email", email);
         try {
-            User user = q.getSingleResult();
-            return user;
+            return q.getSingleResult();
         } catch (NoResultException e) {
             return null;
         } finally {
@@ -78,16 +76,14 @@ public class UserDB {
     }
 
     public static List<User> selectUsers() {
-    EntityManager em = DBUtil.getEmFactory().createEntityManager();
-    String qString = "SELECT u from User u";
-    TypedQuery<User> q = em.createQuery(qString, User.class);
-
-    try {
-        // Luôn trả về danh sách, dù nó có rỗng hay không.
-        return q.getResultList(); 
-    } finally {
-        em.close();
-    }
-
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        String qString = "SELECT u from User u";
+        TypedQuery<User> q = em.createQuery(qString, User.class);
+        try {
+            // SỬA LỖI: Luôn trả về danh sách, dù nó có rỗng hay không.
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
     }
 }
