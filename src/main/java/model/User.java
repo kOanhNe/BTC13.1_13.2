@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Users") // Đảm bảo tên bảng trong CSDL của bạn là "Users"
+@Table(name = "Users")
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    // SỬA LỖI: Đặt annotation trực tiếp lên thuộc tính (field)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Dùng IDENTITY rõ ràng hơn cho PostgreSQL/MySQL
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id") // <-- THÊM DÒNG NÀY (thay "user_id" bằng tên cột đúng trong database của bạn)
     private Long userid;
 
     private String email;
