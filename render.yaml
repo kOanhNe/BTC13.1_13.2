@@ -1,0 +1,23 @@
+# Đây là file bản thiết kế cho Render
+# Nó định nghĩa tất cả các dịch vụ cần thiết cho ứng dụng
+
+services:
+  # Dịch vụ 1: Cơ sở dữ liệu PostgreSQL
+  - type: psql         # Loại dịch vụ là PostgreSQL
+    name: user-db      # Đặt tên cho database là user-db
+    plan: free         # Sử dụng gói miễn phí
+
+  # Dịch vụ 2: Ứng dụng Web Java
+  - type: web          # Loại dịch vụ là Web Service
+    name: user-app     # Đặt tên cho ứng dụng là user-app
+    plan: free         # Sử dụng gói miễn phí
+    runtime: docker    # Báo cho Render biết ứng dụng này chạy bằng Docker
+    dockerfilePath: ./Dockerfile # Đường dẫn tới Dockerfile của bạn
+    
+    # Đây là phần quan trọng nhất: Tự động kết nối database
+    envVars:
+      - key: DATABASE_URL               # Tạo một biến môi trường tên là DATABASE_URL
+        fromService:                    # Lấy giá trị của nó từ một dịch vụ khác
+          type: psql                    # Dịch vụ đó có loại là PostgreSQL
+          name: user-db                 # Tên là user-db (đã định nghĩa ở trên)
+          property: connectionString    # Lấy thuộc tính connectionString của nó
