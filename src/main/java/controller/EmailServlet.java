@@ -17,23 +17,22 @@ public class EmailServlet extends HttpServlet {
             throws ServletException, IOException {
         String url = "/new.jsp"; // Mặc định là trang đăng ký
 
-        // get current action
+        // Lấy action từ request
         String action = request.getParameter("action");
         if (action == null) {
-            action = "join";  // default action
+            action = "join";  // Action mặc định
         }
 
-        // perform action and set URL to appropriate page
         if (action.equals("join")) {
-            url = "/new.jsp";    // the "join" page
-        }
+            url = "/new.jsp";    // Trang "join"
+        } 
         else if (action.equals("add")) {
-            // get parameters from the request
+            // Lấy các tham số
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
 
-            // store data in User object
+            // Tạo đối tượng User
             User user = new User();
             user.setEmail(email);
             user.setFirstName(firstName);
@@ -41,13 +40,11 @@ public class EmailServlet extends HttpServlet {
             
             request.setAttribute("user", user);
 
-            // validate the parameters
             String message;
             if (UserDB.emailExists(user.getEmail())) {
                 message = "This email address already exists. Please enter another email address.";
                 url = "/new.jsp"; // Quay lại trang đăng ký nếu email trùng
-            }
-            else {
+            } else {
                 message = "";
                 UserDB.insert(user);
                 url = "/thanks.jsp"; // Chuyển đến trang cảm ơn khi thành công
