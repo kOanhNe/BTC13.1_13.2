@@ -1,7 +1,0 @@
-# Chỉ giữ lại phần định nghĩa Web Service
-services:
-  - type: web
-    name: baitap13_23133052
-    plan: free
-    runtime: docker
-    dockerfilePath: ./Dockerfile
